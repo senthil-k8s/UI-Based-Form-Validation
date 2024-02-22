@@ -1,38 +1,60 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import createDynamicSchema, { dynamicFormSchema } from '../schemas/validationSchema';
+import { z } from 'zod';
+import { InputField } from './input-field.component';
 
 const Form = () => {
+    const [dynamicSchema, setDynamicSchema] = useState(createDynamicSchema("", z.string(), ""));
     
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<dynamicFormSchema>({
+        resolver: zodResolver(dynamicSchema),
+    });
+
+    
+    console.log(errors);
+    
+
+    const data = [
+        {
+            Title: "First Name",
+            PlaceHolder: "Enter your First Name",
+            label: "firstName",
+        },
+        {
+            Title: "Last Name",
+            PlaceHolder: "Enter your Last Name",
+            label: "lastName",
+        },
+        {
+            Title: "Email",
+            PlaceHolder: "Enter your email id",
+            label: "email",
+        },
+        {
+            Title: "Password",
+            PlaceHolder: "Enter your password",
+            label: "password",
+        },
+    ]
+
+    const form = useForm<dynamicFormSchema>({
+        resolver: zodResolver(dynamicSchema),
+    });
     return (
-        <div className=''>
-            <form className="max-w-sm mx-auto">
-                <div className="mb-5">
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                    <input type="text" id="firstName" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required />
-                </div>
-                <div className="mb-5">
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                    <input type="text" id="lastName" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required />
-                </div>
-                <div className="mb-5">
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                    <input type="email" id="email" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required />
-                </div>
-                <div className="mb-5">
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-                    <input type="password" id="password" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required />
-                </div>
-                <div className="mb-5">
-                    <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repeat password</label>
-                    <input type="password" id="repeat-password" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required />
-                </div>
-                <div className="flex items-start mb-5">
-                    <div className="flex items-center h-5">
-                        <input id="terms" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
-                    </div>
-                    <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" className="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a></label>
-                </div>
-                <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register new account</button>
-            </form>
+        <div>
+        <form onSubmit={handleSubmit((data) => console.log("data", data))} >
+                <InputField id="firstName" type="text" placeholder="First Name" register={register} errors={errors} label="First Name" setDynamicSchema={setDynamicSchema} />
+                <InputField id="lastName" type="text" placeholder="Last Name" register={register} errors={errors} label="Last Name" setDynamicSchema={setDynamicSchema} />
+                <InputField id="email" type="text" placeholder="Email" register={register} errors={errors} label="Email" setDynamicSchema={setDynamicSchema} />
+                <InputField id="password" type="text" placeholder="Password" register={register} errors={errors} label="Password" setDynamicSchema={setDynamicSchema} />
+            <button type="submit">Submit</button>
+        </form>    
         </div>
     )
 }
