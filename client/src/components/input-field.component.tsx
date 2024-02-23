@@ -14,7 +14,6 @@ interface InputFieldProps {
     setDynamicSchema:any
 }
 
-
 export const InputField: React.FC<InputFieldProps> = ({ id, type, placeholder, register, errors, label, setDynamicSchema }) => {
     const {
         isOption,
@@ -29,8 +28,6 @@ export const InputField: React.FC<InputFieldProps> = ({ id, type, placeholder, r
 
     useEffect(() => {
         if(selectedCondition && value){
-            console.log("selected Condition : ", selectedCondition);
-            console.log("value : ", value);
             setDynamicSchema(createDynamicSchema(id, selectedCondition, value))   
         }
     },[selectedCondition, value])
@@ -85,7 +82,6 @@ export const InputField: React.FC<InputFieldProps> = ({ id, type, placeholder, r
                     </div>
                 </>
             )}
-
         </div>
     );
 };
