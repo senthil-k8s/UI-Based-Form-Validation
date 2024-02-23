@@ -8,8 +8,6 @@ export const useConditionalLogic = () => {
 
     const handleOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setselectedCondition(e.target.value);
-        console.log(selectedCondition);
-        
     };
 
     const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
