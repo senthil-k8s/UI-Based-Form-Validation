@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useConditionalLogic = (label:string) => {
+export const useConditionalLogic = () => {
     const [isOption, setisOption] = useState(false);
     const [isLogic, setisLogic] = useState(false);
     const [selectedCondition, setselectedCondition] = useState("");
