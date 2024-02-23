@@ -24,7 +24,7 @@ export const InputField: React.FC<InputFieldProps> = ({ id, type, placeholder, r
         setisLogic,
         handleOptionChange,
         handleValueChange,
-    } = useConditionalLogic(label);
+    } = useConditionalLogic();
 
     useEffect(() => {
         if(selectedCondition && value){
